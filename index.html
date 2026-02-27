@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ChadKrishi - Rooftop Farming Social Commerce</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Navigation Bar -->
+  <nav id="navbar" class="navbar hidden">
+    <div class="nav-container">
+      <div class="nav-logo">
+        <span class="logo-icon">🌿</span>
+        <span class="logo-text">ChadKrishi</span>
+      </div>
+      <div class="nav-menu">
+        <a href="#" data-page="dashboard" class="nav-link active">Home</a>
+        <a href="#" data-page="create-post" class="nav-link">Create Post</a>
+        <a href="#" data-page="my-posts" class="nav-link">My Posts</a>
+        <a href="#" data-page="profile" class="nav-link">Profile</a>
+        <button id="logoutBtn" class="btn btn-secondary btn-sm">Logout</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Toast Notifications -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- Login Page -->
+  <div id="login-page" class="page active">
+    <div class="auth-container">
+      <div class="auth-card">
+        <div class="auth-header">
+          <div class="logo-large">
+            <span class="logo-icon-large">🌿</span>
+            <h1>ChadKrishi</h1>
+          </div>
+          <p class="auth-subtitle">Rooftop Farming Marketplace</p>
+        </div>
+        <form id="login-form" class="auth-form">
+          <div class="form-group">
+            <label class="form-label">Email</label>
+            <input type="email" id="login-email" class="form-control" placeholder="your@email.com" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Password</label>
+            <input type="password" id="login-password" class="form-control" placeholder="********" required />
+          </div>
+          <button type="submit" class="btn btn-primary btn-full-width">Login</button>
+        </form>
+        <div class="auth-divider"><span>or</span></div>
+        <button id="guest-login-btn" class="btn btn-outline btn-full-width">Continue as Guest</button>
+        <div class="auth-footer">
+          <p>Don't have an account? <a href="#" id="show-signup">Sign Up</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Signup Page -->
+  <div id="signup-page" class="page">
+    <div class="auth-container">
+      <div class="auth-card">
+        <div class="auth-header">
+          <div class="logo-large">
+            <span class="logo-icon-large">🌿</span>
+            <h1>Join ChadKrishi</h1>
+          </div>
+          <p class="auth-subtitle">Start your rooftop farming journey</p>
+        </div>
+        <form id="signup-form" class="auth-form">
+          <div class="form-group">
+            <label class="form-label">Username</label>
+            <input type="text" id="signup-username" class="form-control" placeholder="Your name" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email</label>
+            <input type="email" id="signup-email" class="form-control" placeholder="your@email.com" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Password</label>
+            <input type="password" id="signup-password" class="form-control" placeholder="Min. 8 characters" required minlength="8" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Phone</label>
+            <input type="tel" id="signup-phone" class="form-control" placeholder="+8801XXXXXXXXX" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Area</label>
+            <select id="signup-area" class="form-control" required>
+              <option value="">Select your area</option>
+              <option value="Mirpur-1">Mirpur-1</option>
+              <option value="Mirpur-14">Mirpur-14</option>
+              <option value="Dhanmondi">Dhanmondi</option>
+              <option value="Uttara">Uttara</option>
+              <option value="Gulshan">Gulshan</option>
+              <option value="Banani">Banani</option>
+              <option value="Mohammadpur">Mohammadpur</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-primary btn-full-width">Sign Up</button>
+        </form>
+        <div class="auth-footer">
+          <p>Already have an account? <a href="#" id="show-login">Login</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dashboard Page -->
+  <div id="dashboard-page" class="page">
+    <div class="hero-section">
+      <div class="hero-content">
+        <h1 class="hero-title">Fresh Produce from Rooftop Gardens</h1>
+        <p class="hero-subtitle">Connect with local farmers in your neighborhood</p>
+      </div>
+    </div>
+    <div class="container">
+      <div class="filter-section">
+        <div class="filter-row">
+          <div class="filter-group">
+            <label class="filter-label">Search Crop</label>
+            <input type="text" id="search-crop" class="form-control" placeholder="Search by crop name..." />
+          </div>
+          <div class="filter-group">
+            <label class="filter-label">Distance</label>
+            <select id="filter-radius" class="form-control">
+              <option value="999">All</option>
+              <option value="2">Within 2 km</option>
+              <option value="5">Within 5 km</option>
+              <option value="10">Within 10 km</option>
+              <option value="20">Within 20 km</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label class="filter-label">Sort By</label>
+            <select id="sort-by" class="form-control">
+              <option value="newest">Newest First</option>
+              <option value="distance">Distance</option>
+              <option value="price-low">Price Low to High</option>
+              <option value="price-high">Price High to Low</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div id="posts-grid" class="posts-grid">
+        <!-- Posts will be dynamically loaded here -->
+      </div>
+
+      <div id="empty-state" class="empty-state hidden">
+        <div class="empty-icon">🌱</div>
+        <h3>No posts found</h3>
+        <p>Try adjusting your filters or be the first to post!</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Create Post Page -->
+  <div id="create-post-page" class="page">
+    <div class="container">
+      <div class="page-header">
+        <h2>Create New Post</h2>
+        <p>Share your rooftop harvest with the community</p>
+      </div>
+
+      <form id="create-post-form" class="post-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Crop Name</label>
+            <input type="text" id="post-crop-name" class="form-control" placeholder="e.g., Organic Tomatoes" required />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Price</label>
+            <div class="input-group">
+              <input type="number" id="post-price" class="form-control" placeholder="0" min="0" step="0.01" required />
+              <select id="post-currency" class="form-control" style="max-width: 100px;">
+                <option value="BDT">BDT</option>
+                <option value="USD">USD</option>
+                <option value="EUR">EUR</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Quantity</label>
+            <div class="input-group">
+              <input type="number" id="post-quantity" class="form-control" placeholder="0" min="0" step="0.01" required />
+              <select id="post-unit" class="form-control" style="max-width: 100px;">
+                <option value="kg">kg</option>
+                <option value="g">g</option>
+                <option value="piece">piece</option>
+                <option value="bunch">bunch</option>
+                <option value="lb">lb</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Description</label>
+          <textarea id="post-description" class="form-control" rows="4" placeholder="Describe your produce..." required></textarea>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Images</label>
+          <input type="file" id="post-images" class="form-control" accept="image/*" multiple />
+          <div id="image-preview" class="image-preview-grid"></div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">External Link (optional)</label>
+          <input type="url" id="post-link" class="form-control" placeholder="https://example.com" />
+        </div>
+
+        <div class="form-actions">
+          <button type="button" id="cancel-post-btn" class="btn btn-secondary">Cancel</button>
+          <button type="submit" class="btn btn-primary">Create Post</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- My Posts Page -->
+  <div id="my-posts-page" class="page">
+    <div class="container">
+      <div class="page-header">
+        <h2>My Posts</h2>
+      </div>
+
+      <div id="my-posts-stats" class="stats-row">
+        <div class="stat-card">
+          <div class="stat-value" id="total-posts">0</div>
+          <div class="stat-label">Total Posts</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="active-posts">0</div>
+          <div class="stat-label">Active</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="sold-posts">0</div>
+          <div class="stat-label">Sold</div>
+        </div>
+      </div>
+
+      <div class="filter-tabs">
+        <button class="tab-btn active" data-filter="all">All</button>
+        <button class="tab-btn" data-filter="available">Available</button>
+        <button class="tab-btn" data-filter="sold">Sold</button>
+      </div>
+
+      <div id="my-posts-grid" class="posts-grid"></div>
+
+      <div id="my-posts-empty" class="empty-state hidden">
+        <div class="empty-icon">🌱</div>
+        <h3>No posts yet</h3>
+        <p>Create your first post to get started!</p>
+        <button class="btn btn-primary" data-page="create-post">Create Post</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Profile Page -->
+  <div id="profile-page" class="page">
+    <div class="container">
+      <div class="page-header">
+        <h2>My Profile</h2>
+      </div>
+
+      <div class="profile-container">
+        <div class="profile-card">
+          <div class="profile-avatar-section">
+            <div class="profile-avatar" id="profile-avatar">
+              <span id="avatar-placeholder">👤</span>
+              <img id="avatar-img" class="hidden" alt="Profile" />
+            </div>
+            <input type="file" id="avatar-upload" class="hidden" accept="image/*" />
+            <button id="change-avatar-btn" class="btn btn-secondary btn-sm">Change Avatar</button>
+          </div>
+
+          <form id="profile-form" class="profile-form">
+            <div class="form-group">
+              <label class="form-label">Username</label>
+              <input type="text" id="profile-username" class="form-control" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Email</label>
+              <input type="email" id="profile-email" class="form-control" disabled />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Phone</label>
+              <input type="tel" id="profile-phone" class="form-control" required />
+            </div>
+            <div class="form-group">
+              <label class="checkbox-label">
+                <input type="checkbox" id="profile-phone-visible" />
+                <span>Show phone number to other users</span>
+              </label>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Area</label>
+              <input type="text" id="profile-area" class="form-control" disabled />
+            </div>
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Post Detail Modal -->
+  <div id="post-detail-modal" class="modal hidden">
+    <div class="modal-overlay"></div>
+    <div class="modal-content modal-large">
+      <button class="modal-close">&times;</button>
+      <div id="post-detail-content"></div>
+    </div>
+  </div>
+
+  <!-- Guest Modal -->
+  <div id="guest-modal" class="modal hidden">
+    <div class="modal-overlay"></div>
+    <div class="modal-content">
+      <button class="modal-close">&times;</button>
+      <div class="guest-modal-content">
+        <h3>Sign In Required</h3>
+        <p>You need to sign in to perform this action.</p>
+        <div class="modal-actions">
+          <button id="guest-modal-signup" class="btn btn-primary btn-full-width">Sign Up</button>
+          <button id="guest-modal-login" class="btn btn-secondary btn-full-width">Login</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Confirm Modal -->
+  <div id="confirm-modal" class="modal hidden">
+    <div class="modal-overlay"></div>
+    <div class="modal-content">
+      <div class="confirm-modal-content">
+        <h3 id="confirm-title">Confirm Action</h3>
+        <p id="confirm-message">Are you sure?</p>
+        <div class="modal-actions">
+          <button id="confirm-cancel" class="btn btn-secondary">Cancel</button>
+          <button id="confirm-ok" class="btn btn-primary">Confirm</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Firebase compat SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/10.13.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.13.1/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore-compat.js"></script>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyD5sykkb_O5Lx-3HTX5AakSWuuwcsgt3KA",
+      authDomain: "chadkrishi-e4f39.firebaseapp.com",
+      databaseURL: "https://chadkrishi-e4f39-default-rtdb.firebaseio.com",
+      projectId: "chadkrishi-e4f39",
+      storageBucket: "chadkrishi-e4f39.firebasestorage.app",
+      messagingSenderId: "876114088369",
+      appId: "1:876114088369:web:47d468d4f55a9a2673ad90",
+      measurementId: "G-RNHXNKRTWV"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db   = firebase.firestore();
+  </script>
+
+  <script src="app.js"></script>
+</body>
+</html>
